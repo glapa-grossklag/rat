@@ -18,7 +18,7 @@ pub fn set(byte: &mut u8, index: u8) {
     *byte |= 0b0000_0001 << index;
 }
 
-pub fn clr(byte: &mut u8, index: u8) {
+pub fn clear(byte: &mut u8, index: u8) {
     if index > 7 {
         panic!("Index must be in the range 0 to 7, was {}", index);
     }
@@ -34,6 +34,6 @@ pub fn flip(byte: &mut u8, index: u8) {
     if get(*byte, index) == 0 {
         set(byte, index);
     } else {
-        clr(byte, index);
+        clear(byte, index);
     }
 }
