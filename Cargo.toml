@@ -1,0 +1,8 @@
+[package]
+name = "rat"
+version = "0.1.0"
+authors = ["Miles Glapa-Grossklag <m.glapa.grossklag@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+fastrand = "1.4.0"
