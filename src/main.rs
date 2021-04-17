@@ -9,11 +9,14 @@ const DEFAULT_ERROR_RATE: f64 = 0.001;
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let mut buffer: Vec<u8> = Vec::new();
+    let mut flipped: usize = 0;
+    let written: usize;
 
     // Define arguments.
     let mut opts = Options::new();
     opts.optopt("e", "error", "The rate at which to flip bits.", "RATE");
     opts.optflag("h", "help", "Print this information.");
+    opts.optflag("v", "verbose", "Print how many bits were flipped and how many bytes were written");
 
     // Match arguments.
     let matches = match opts.parse(&args[1..]) {
@@ -45,6 +48,7 @@ fn main() {
         for bit in 0..8 {
             if fastrand::f64() <= error_rate {
                 bits::flip(byte, bit);
+                flipped += 1;
             }
         }
     }
@@ -52,7 +56,13 @@ fn main() {
     // Write.
     match io::stdout().write(&buffer) {
         Err(why) => panic!("Cannot write: {}", why),
-        Ok(_) => (),
+        Ok(n) => written = n,
+    }
+
+    // -v, --verbose
+    if matches.opt_present("v") {
+        eprintln!("Flipped: {} bits", flipped);
+        eprintln!("Written: {} bytes", written);
     }
 
     return;
