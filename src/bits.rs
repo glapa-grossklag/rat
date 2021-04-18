@@ -1,55 +1,53 @@
-/// Get the bit-value of `byte` at `index`.
+/// Get the bit-value of `byte` at `i`.
 ///
 /// * The bit-value will aways be 0 or 1.
-/// * The index must be between 0 and 7 inclusive.
-pub fn get(byte: u8, index: u8) -> u8 {
-    if index > 7 {
-        panic!("Index must be in the range 0 to 7, was {}", index);
+/// * The index `i` must be between 0 and 7 inclusive.
+pub fn get(byte: u8, i: u8) -> u8 {
+    if i > 7 {
+        panic!("Index must be in the range 0 to 7, was {}", i);
     }
 
-    if byte & (0b0000_0001 << index) != 0 {
-        1
+    if byte & (0b0000_0001 << i) != 0 {
+        return 1;
     } else {
-        0
+        return 0;
     }
 }
 
-/// Set the bit-value of `byte` at `index`.
+/// Return `byte` with the `i`th bit as 1.
 ///
-/// * Setting a bit implies changing it to 1.
-/// * The index must be between 0 and 7 inclusive.
-pub fn set(byte: &mut u8, index: u8) {
-    if index > 7 {
-        panic!("Index must be in the range 0 to 7, was {}", index);
+/// The index `i` must be between 0 and 7 inclusive.
+pub fn set(byte: u8, i: u8) -> u8 {
+    if i > 7 {
+        panic!("Index must be in the range 0 to 7 inclusive, was {}", i);
     }
 
-    *byte |= 0b0000_0001 << index;
+    return byte | (0b0000_0001 << i);
 }
 
-/// Clear the bit-value of `byte` at `index`.
+/// Return `byte` with the `i`th bit as 1.
 ///
-/// * Clearing a bit implies changing it to 0.
-/// * The index must be between 0 and 7 inclusive.
-pub fn clear(byte: &mut u8, index: u8) {
-    if index > 7 {
-        panic!("Index must be in the range 0 to 7, was {}", index);
+/// The index `i` must be between 0 and 7 inclusive.
+pub fn clear(byte: u8, i: u8) -> u8 {
+    if i > 7 {
+        panic!("Index must be in the range 0 to 7 inclusive, was {}", i);
     }
 
-    *byte &= !0b0000_0001 << index;
+    return byte & (!0b0000_0001 << i);
 }
 
-/// Flip the bit-value of `byte` at `index`.
+/// Return `byte` with the `i`th bit flipped.
 ///
-/// * If the bit-value was 0, then it will change to 1, and vice versa.
-/// * The index must be between 0 and 7 inclusive.
-pub fn flip(byte: &mut u8, index: u8) {
+/// The index `i` must be between 0 and 7 inclusive.
+/// If the bit-value was 0, then it will change to 1, and vice versa.
+pub fn flip(byte: u8, index: u8) -> u8 {
     if index > 7 {
-        panic!("Index must be in the range 0 to 7, was {}", index);
+        panic!("Index must be in the range 0 to 7 inclusive, was {}", index);
     }
 
-    if get(*byte, index) == 0 {
-        set(byte, index);
+    if get(byte, index) == 0 {
+        return set(byte, index);
     } else {
-        clear(byte, index);
+        return clear(byte, index);
     }
 }

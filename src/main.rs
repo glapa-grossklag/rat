@@ -47,7 +47,7 @@ fn main() {
     for byte in buffer.iter_mut() {
         for bit in 0..8 {
             if fastrand::f64() <= error_rate {
-                bits::flip(byte, bit);
+                *byte = bits::flip(*byte, bit);
                 flipped += 1;
             }
         }
