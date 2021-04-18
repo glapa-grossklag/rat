@@ -14,9 +14,10 @@ fn main() {
 
     // Define arguments.
     let mut opts = Options::new();
-    opts.optopt("e", "error", "The rate at which to flip bits.", "RATE");
     opts.optflag("h", "help", "Print this information.");
-    opts.optflag("v", "verbose", "Print how many bits were flipped and how many bytes were written");
+    opts.optflag("v", "verbose", "Print how many bits were flipped and how many bytes were written.");
+    opts.optopt("e", "error", "The rate at which to flip bits, default is 0.001.", "RATE");
+    opts.optopt("s", "seed", "The seed for the random number generator if reproducable results are needed. Must be an unsigned integer.", "SEED");
 
     // Match arguments.
     let matches = match opts.parse(&args[1..]) {
@@ -35,6 +36,15 @@ fn main() {
     let error_rate = match matches.opt_get_default("e", DEFAULT_ERROR_RATE) {
         Err(why) => panic!("Cannot read option: {}", why),
         Ok(x) => x,
+    };
+
+    // -s, --seed
+    match matches.opt_get("s") {
+        Err(why) => panic!("Cannot read option: {}", why),
+        Ok(option) => match option {
+            Some(seed) => fastrand::seed(seed),
+            None => (),
+        }
     };
 
     // Read.

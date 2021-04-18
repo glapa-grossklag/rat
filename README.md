@@ -20,15 +20,26 @@ $ cargo uninstall
 
 
 The program will read from `stdin` and write to `stdout`, flipping a percentage
-of bits. View all options with `$ rat -h`.
+of bits.
 
-The default error rate is 0.1% of bits, but can be changed using the `-e` or
-`--error` option. Note that if the error rate is less than 0, no bits will be
-flipped. Likewise, if the error rate is greater than 1, all bits will be
-fipped.
+```
+$ rat --help
+Usage:
+    rat [options]
 
-To view how many bits were flipped and the total amount of bytes processed, run
-with the `-v` or `--verbose` option.
+Options:
+    -h, --help          Print this information.
+    -v, --verbose       Print how many bits were flipped and how many bytes
+                        were written.
+    -e, --error RATE    The rate at which to flip bits, default is 0.001.
+    -s, --seed SEED     The seed for the random number generator if
+                        reproducable results are needed. Must be an unsigned
+                        integer.
+```
+
+Note that if the error rate is less than 0, no bits will be flipped. Likewise,
+if the error rate is greater than 1, all bits will be fipped.
+
 
 # Examples
 
